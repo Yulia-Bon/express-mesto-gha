@@ -8,10 +8,10 @@ const {
 
 function handleError(err, res) {
   if (err.name === 'ValidationError') {
-    return res.status(ERROR_CODE_BAD_REQUEST).send({ message: 'Переданы некорректные данные при редактировании пользователя' });
+    return res.status(ERROR_CODE_BAD_REQUEST).send({ message: 'Переданы некорректные данные при создании карточки' });
   }
   if (err.name === 'CastError') {
-    return res.status(ERROR_CODE_BAD_REQUEST).send({ message: 'Пользователь по указанному _id не найден.' });
+    return res.status(ERROR_CODE_BAD_REQUEST).send({ message: 'Не валидный id карточки' });
   }
   return res.status(ERROR_CODE_INTERNAL).send({ message: 'На сервере произошла ошибка' });
 }
