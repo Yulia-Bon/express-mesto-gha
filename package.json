@@ -15,9 +15,6 @@
   },
   "author": "Yulia",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/yulia-bon/express-mesto-gha/issues"
-  },
   "homepage": "https://github.com/yulia-bon/express-mesto-gha#readme",
   "devDependencies": {
     "eslint": "^8.2.0",
