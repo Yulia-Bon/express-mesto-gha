@@ -8,15 +8,6 @@ const routes = require('./routes/user');
 const {PORT = 3000} = process.env;
 const app = express();
 
-/*
-// миделвеа
-app.use((req, res, next) => {
-  console.log(req.method, req.path);
-
-  next();
-});
-*/
-
 // Временное решение для авторизаци
 app.use((req, res, next) => {
   req.user = {
