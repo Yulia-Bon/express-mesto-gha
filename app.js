@@ -1,11 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const routes = require('./routes/user');
+const routes = require('./routes/errorsway');
 
 // Слушаем 3000 порт
 // eslint-disable-next-line no-undef
-const {PORT = 3000} = process.env;
+const { PORT = 3000 } = process.env;
 const app = express();
 
 // Временное решение для авторизаци
@@ -33,7 +33,4 @@ async function main() {
 app.use(express.json());
 app.use(routes);
 
-//запуск сервера
 main();
-
-

@@ -8,10 +8,12 @@ const {
 
 function handleError(err, res) {
   if (err.name === 'ValidationError') {
-    res.status(ERROR_CODE_BAD_REQUEST).send({ message: 'Переданы некорректные данные при создании карточки' });
-  } else {
-    res.status(ERROR_CODE_INTERNAL).send({ message: 'На сервере произошла ошибка' });
+    return res.status(ERROR_CODE_BAD_REQUEST).send({ message: 'Переданы некорректные данные при редактировании пользователя' });
   }
+  if (err.name === 'CastError') {
+    return res.status(ERROR_CODE_BAD_REQUEST).send({ message: 'Пользователь по указанному _id не найден.' });
+  }
+  return res.status(ERROR_CODE_INTERNAL).send({ message: 'На сервере произошла ошибка' });
 }
 
 // GET /cards — возвращает все карточки
