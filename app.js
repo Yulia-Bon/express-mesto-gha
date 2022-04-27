@@ -1,36 +1,42 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const routes = require('./routes/errorsway');
+// const routes = require('./routes/errorsway');
 
+const { errors } = require('celebrate');
+const bodyParser = require('body-parser');
+const routerErrorWay = require('./routes/errorsway');
+const { createUser, login } = require('./controllers/users');
+const auth = require('./middlewares/auth');
+const errorHandler = require('./middlewares/errorHandler');
+const { registerValid, loginValid } = require('./middlewares/validationJoi');
+const { requestLogger, errorLoger } = require('./middlewares/logger');
 // Слушаем 3000 порт
 // eslint-disable-next-line no-undef
 const { PORT = 3000 } = process.env;
 const app = express();
 
-// Временное решение для авторизаци
-app.use((req, res, next) => {
-  req.user = {
-    _id: '625edd230f91a3a3aeb41a5d',
-  };
+app.use(requestLogger);
 
-  next();
-});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-async function main() {
-  try {
-    // подключаемся к серверу mongo
-    await mongoose.connect('mongodb://localhost:27017/mestodb');
-  } catch (error) {
-    console.log(error);
-  }
+app.post('/signup', registerValid, createUser);
+app.post('/signin', loginValid, login);
 
-  app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`); // покажет какой порт слушает приложение
-  });
-}
+// подключаемся к серверу mongo
+mongoose.connect('mongodb://localhost:27017/mestodb', { useNewUrlParser: true });
 
-app.use(express.json());
-app.use(routes);
+app.use('/card', require('./routes/card'));
 
-main();
+app.use(errorLoger);
+
+app.use(auth);
+
+app.use(routerErrorWay);
+
+app.use(errors());
+
+app.use(errorHandler);
+
+app.listen(PORT);

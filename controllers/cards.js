@@ -1,19 +1,15 @@
 const card = require('../models/card');
-
-const {
-  ERROR_CODE_BAD_REQUEST,
-  ERROR_CODE_NOT_FOUND,
-  ERROR_CODE_INTERNAL,
-} = require('../errors/error_code');
+const ErrorNotFound = require('../errors/ErrorNotFound');
+const BadRequestError = require('../errors/BadRequestError');
 
 function handleError(err, res) {
   if (err.name === 'ValidationError') {
-    return res.status(ERROR_CODE_BAD_REQUEST).send({ message: 'Переданы некорректные данные при создании карточки' });
+    return res.status(BadRequestError).send({ message: 'Переданы некорректные данные при создании карточки' });
   }
   if (err.name === 'CastError') {
-    return res.status(ERROR_CODE_BAD_REQUEST).send({ message: 'Не валидный id карточки' });
+    return res.status(BadRequestError).send({ message: 'Не валидный id карточки' });
   }
-  return res.status(ERROR_CODE_INTERNAL).send({ message: 'На сервере произошла ошибка' });
+  return res.status(BadRequestError).send({ message: 'На сервере произошла ошибка' });
 }
 
 // GET /cards — возвращает все карточки
@@ -22,9 +18,7 @@ module.exports.getCards = (req, res) => {
     .then((cards) => {
       res.status(200).send({ data: cards });
     })
-    .catch(() => {
-      res.status(ERROR_CODE_INTERNAL).send({ message: 'На сервере произошла ошибка' });
-    });
+    .catch((err) => handleError(err, res));
 };
 
 // POST /cards — создаёт карточку
@@ -44,7 +38,7 @@ module.exports.deleteCard = (req, res) => {
     .then((cards) => {
       if (!cards) {
         // отправить ошибку 404
-        return res.status(ERROR_CODE_NOT_FOUND).send({ message: 'Карточка с указанным _id не найдена.' });
+        return res.status(ErrorNotFound).send({ message: 'Карточка с указанным _id не найдена.' });
       }
       return res.send({ data: cards });
     })
@@ -61,7 +55,7 @@ module.exports.likeCard = (req, res) => {
     .then((cards) => {
       if (!cards) {
         // отправить ошибку 404
-        return res.status(ERROR_CODE_NOT_FOUND).send({ message: 'Передан несуществующий _id карточки.' });
+        return res.status(ErrorNotFound).send({ message: 'Передан несуществующий _id карточки.' });
       }
       return res.status(200).send({ data: cards });
     })
@@ -78,7 +72,7 @@ module.exports.dislikeCard = (req, res) => {
     .then((cards) => {
       if (!cards) {
         // отправить ошибку 404
-        return res.status(ERROR_CODE_NOT_FOUND).send({ message: 'Передан несуществующий _id карточки.' });
+        return res.status(ErrorNotFound).send({ message: 'Передан несуществующий _id карточки.' });
       }
       return res.status(200).send({ data: cards });
     })
