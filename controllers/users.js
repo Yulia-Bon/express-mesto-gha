@@ -5,15 +5,7 @@ const ErrorNotFound = require('../errors/ErrorNotFound');
 const ErrorConflict = require('../errors/ErrorConflict');
 const BadRequestError = require('../errors/BadRequestError');
 const Unauthorized = require('../errors/Unauthorized');
-/*
-const {
-  ERROR_CODE_BAD_REQUEST,
-  ERROR_CODE_NOT_FOUND,
-  ERROR_CODE_INTERNAL,
-  SEKRET_KEY,
-  ERROR_CODE_BAD_AUTH,
-} = require('../constants/error_code');
-*/
+
 //  login (/POST)  авторизация(залогиниывание) пользователя по email и password
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
@@ -21,7 +13,7 @@ module.exports.login = (req, res, next) => {
     .then((users) => {
       const token = jwt.sign({ _id: users._id }, 'some-secret-key', { expiresIn: '7d' });
       res.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7,
+        maxAge: 3600 * 24 * 7,
         httpOnly: true,
         sameSite: true,
       });

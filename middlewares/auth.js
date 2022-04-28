@@ -8,12 +8,12 @@ module.exports = (req, res, next) => {
   if (!authorization || !authorization.startsWith('Bearer ')) {
     next(new Unauthorized('Необходима авторизация'));
   }
-  const token = String(req.headers.authorization).replace('Bearer ', '');
+  const token = authorization.replace('Bearer ', '');
 
   let payload;
 
   try {
-    // попытаемся верифицировать токен
+    // верифицируем токен
     payload = jwt.verify(token, 'some-secret-key');
   } catch (err) {
     // отправим ошибку, если не получилось
