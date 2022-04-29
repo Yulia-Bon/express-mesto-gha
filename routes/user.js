@@ -6,14 +6,15 @@ const {
   userValid,
 } = require('../middlewares/validationJoi');
 const {
-  getUsers,
   getUser,
   createUser,
+  getUserMe,
   updateUserInfo,
   updateAvatar,
 } = require('../controllers/users');
 
-router.get('/users', auth, getUsers);
+router.get('/users', auth, getUser);
+router.get('/users/me', auth, getUserMe);
 router.get('/users/:userId', auth, parameterIdValid('userId'), getUser);
 router.post('/users', auth, createUser);
 router.patch('/users/me', auth, userValid, updateUserInfo);

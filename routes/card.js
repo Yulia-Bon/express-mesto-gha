@@ -5,14 +5,14 @@ const {
   parameterIdValid,
 } = require('../middlewares/validationJoi');
 const {
-  getCards,
+  getCard,
   createCard,
   deleteCard,
   likeCard,
   dislikeCard,
 } = require('../controllers/cards');
 
-router.get('/cards', auth, getCards);
+router.get('/cards', auth, getCard);
 router.post('/cards', auth, createCardValid, createCard);
 router.delete('/cards/:cardId', auth, parameterIdValid('cardId'), deleteCard);
 router.put('/cards/:cardId/likes', auth, parameterIdValid('cardId'), likeCard);
