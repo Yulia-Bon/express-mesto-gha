@@ -7,7 +7,7 @@ const BadRequestError = require('../errors/BadRequestError');
 const Unauthorized = require('../errors/Unauthorized');
 
 // GET /users — возвращает всех пользователей
-module.exports.getUser = (req, res, next) => {
+module.exports.getUsers = (req, res, next) => {
   Users.find({})
     .then((user) => res.status(200).send({ data: user }))
     .catch((err) => next(err));
@@ -128,12 +128,17 @@ module.exports.login = (req, res, next) => {
   Users.findOne({ email }, '+password')
     .then((user) => {
       if (!user) {
-        next(new Unauthorized('Не правильный логин или пароль'));
+        return next(new Unauthorized('Не правильный логин или пароль'));
       }
-      const isValid = bcrypt.compare(password, user.password);
-      if (!isValid) {
-        next(new Unauthorized('Неправильные почта или пароль'));
-      }
+      return bcrypt.compare(password, user.password)
+        .then((isValid) => {
+          if (!isValid) {
+            return next(new Unauthorized('Неправильные почта или пароль'));
+          }
+          return user;
+        });
+    })
+    .then((user) => {
       const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
       res.cookie('token', token);
       res.send({ jwt: token });
