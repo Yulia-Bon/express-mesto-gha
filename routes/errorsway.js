@@ -1,18 +1,14 @@
-const express = require('express');
-const userRouter = require('./user');
-const cardRouter = require('./card');
+const router = require('express').Router();
+const userRoute = require('./user');
+const cardsRoute = require('./card');
 const ErrorNotFound = require('../errors/ErrorNotFound');
 
-const app = express();
-
-app.use(userRouter);
-app.use(cardRouter);
+router.use('/user', userRoute);
+router.use('/card', cardsRoute);
 
 // обрабатываем некорректный маршрут и возвращаем ошибку
-app.use('*', (req, res) => {
-  res
-    .status(ErrorNotFound)
-    .send({ message: `Страницы по адресу ${req.baseUrl} не существует` });
+router.use((req, res, next) => {
+  next(new ErrorNotFound({ message: 'Данный путь не найден' }));
 });
 
-module.exports = app;
+module.exports = router;

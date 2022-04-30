@@ -20,9 +20,6 @@ module.exports.getUserId = (req, res, next) => {
       throw new ErrorNotFound('Пользователь не найден');
     })
     .then((user) => {
-      if (!user) {
-        next(new ErrorNotFound('Пользователь не найден'));
-      }
       res.status(200).send({ data: user });
     })
     .catch((err) => {
@@ -94,12 +91,9 @@ module.exports.updateUserInfo = (req, res, next) => {
   const { name, about } = req.body;
   Users.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
     .orFail(() => {
-      throw new BadRequestError('Переданы некорректные данные');
+      throw new ErrorNotFound('Пользователь не найден');
     })
     .then((user) => {
-      if (!user) {
-        next(new BadRequestError('Переданы некорректные данные'));
-      }
       res.status(200).send({ data: user });
     })
     .catch((err) => {
@@ -115,12 +109,9 @@ module.exports.updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
   Users.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
     .orFail(() => {
-      throw new BadRequestError('Переданы некорректные данные');
+      throw new ErrorNotFound('Пользователь не найден');
     })
     .then((user) => {
-      if (!user) {
-        next(new BadRequestError('Переданы некорректные данные'));
-      }
       res.status(200).send({ data: user });
     })
     .catch((err) => {
@@ -141,18 +132,13 @@ module.exports.login = (req, res, next) => {
       }
       const isValid = bcrypt.compare(password, user.password);
       if (!isValid) {
-        next(new BadRequestError('Переданы некорректные данные'));
+        next(new Unauthorized('Неправильные почта или пароль'));
       }
       const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
       res.cookie('token', token);
       res.send({ jwt: token });
     })
     .catch((err) => {
-      if (err.message === 'IncorrectEmail') {
-        next(new Unauthorized('Не правильный логин или пароль'));
-      }
-      return next(err);
-      // eslint-disable-next-line no-unreachable
       next(err);
     });
 };

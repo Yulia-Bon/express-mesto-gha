@@ -13,7 +13,6 @@ const {
   updateAvatar,
 } = require('../controllers/users');
 
-router.get('/users', auth, getUser);
 router.get('/users/me', auth, getUserMe);
 router.get('/users/:userId', auth, parameterIdValid('userId'), getUser);
 router.post('/users', auth, createUser);
