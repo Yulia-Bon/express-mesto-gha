@@ -9,13 +9,13 @@ const {
   deleteCard,
   likeCard,
   dislikeCard,
-  getCard,
+  getCards,
 } = require('../controllers/cards');
 
 router.post('/cards', auth, createCardValid, createCard);
 router.delete('/cards/:cardId', auth, parameterIdValid('cardId'), deleteCard);
 router.put('/cards/:cardId/likes', auth, parameterIdValid('cardId'), likeCard);
 router.delete('/cards/:cardId/likes', auth, parameterIdValid('cardId'), dislikeCard);
-router.get('/', auth, getCard);
+router.get('/cards', auth, getCards);
 
 module.exports = router;

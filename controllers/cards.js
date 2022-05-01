@@ -3,7 +3,7 @@ const ErrorNotFound = require('../errors/ErrorNotFound');
 const BadRequestError = require('../errors/BadRequestError');
 const ForbiddenError = require('../errors/Forbidden');
 
-module.exports.getCard = (req, res, next) => {
+module.exports.getCards = (req, res, next) => {
   Card.find({})
     .then((cards) => res.status(200).send({ data: cards }))
     .catch((err) => next(err));
