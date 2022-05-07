@@ -1,11 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const { requestLogger, errorLogger } = require('./middlewares/logger');
 // const routes = require('./routes/errorsway');
 
 const { errors } = require('celebrate');
 const bodyParser = require('body-parser');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routerErrorWay = require('./routes/errorsway');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
