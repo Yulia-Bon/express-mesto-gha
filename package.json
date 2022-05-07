@@ -15,6 +15,7 @@
   },
   "author": "Yulia",
   "license": "ISC",
+  "homepage": "https://github.com/yulia-bon/express-mesto-gha#readme",
   "devDependencies": {
     "eslint": "^8.10.0",
     "eslint-config-airbnb-base": "^15.0.0",
