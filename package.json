@@ -15,7 +15,6 @@
   },
   "author": "Yulia",
   "license": "ISC",
-  "homepage": "http://mesto-react.ybon.nomoredomains.work/",
   "devDependencies": {
     "eslint": "^8.10.0",
     "eslint-config-airbnb-base": "^15.0.0",

@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 const { errors } = require('celebrate');
 const bodyParser = require('body-parser');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
+
 const routerErrorWay = require('./routes/errorsway');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
@@ -19,7 +19,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(requestLogger);
 app.post('/signup', registerValid, createUser);
 app.post('/signin', loginValid, login);
 
@@ -27,10 +26,6 @@ app.post('/signin', loginValid, login);
 mongoose.connect('mongodb://localhost:27017/mestodb', { useNewUrlParser: true });
 
 app.use(auth);
-
-app.use(errorLogger); // подключаем логгер ошибок
-
-app.use(errors()); // обработчик ошибок celebrate
 
 app.use(routerErrorWay);
 
