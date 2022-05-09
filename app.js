@@ -1,10 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser');
+//const cookieParser = require('cookie-parser');
 
 //const helmet = require('helmet');
 
-const cors = require('cors');
+//const cors = require('cors');
 // const routes = require('./routes/errorsway');
 
 const { errors } = require('celebrate');
