@@ -34,7 +34,7 @@ app.use((req, res, next) => {
    next();
  });
 
-app.use(cookieParser());
+//app.use(cookieParser());
 // подключаемся к серверу mongo
 mongoose.connect('mongodb://localhost:27017/mestodb', { useNewUrlParser: true });
 
