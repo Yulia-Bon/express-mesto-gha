@@ -18,7 +18,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 // Слушаем 3000 порт
 // eslint-disable-next-line no-undef
-const { PORT = 3001 } = process.env;
+const { PORT = 3000 } = process.env;
 const app = express();
 
 // Мидлвары
