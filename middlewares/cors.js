@@ -3,6 +3,7 @@ const options = {
     'http://localhost:3000',
     'http://mesto-express.ybon.nomoredomains.work/',
     'https://mesto-express.ybon.nomoredomains.work/',
+    'http://mesto-react.ybon.nomoredomains.work',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
