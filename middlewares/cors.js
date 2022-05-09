@@ -2,8 +2,7 @@ const options = {
   origin: [
     'http://localhost:3000',
     'http://mesto-express.ybon.nomoredomains.work/',
-    'http://mesto-express.ybon.nomoredomains.work/',
-    'https://github.com/Yulia-Bon',
+    'https://mesto-express.ybon.nomoredomains.work/',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,

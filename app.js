@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
+const helmet = require('helmet');
+
 const cors = require('cors');
 // const routes = require('./routes/errorsway');
 
@@ -13,6 +15,7 @@ const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
 const { registerValid, loginValid } = require('./middlewares/validationJoi');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { options } = require('./middlewares/cors');
 // Слушаем 3000 порт
 // eslint-disable-next-line no-undef
 const { PORT = 3000 } = process.env;
@@ -34,9 +37,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(requestLogger); // подключаем логгер запросов
 
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use('*', cors(options));
+app.use(helmet());
+app.use(express.json());
+app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
