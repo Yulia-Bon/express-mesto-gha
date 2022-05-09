@@ -26,7 +26,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', { useNewUrlParser: true })
 
 // Мидлвары
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://api.mesto-express.ybon.nomoredomains.work/');
+  res.header('Access-Control-Allow-Origin', 'http://mesto-express.ybon.nomoredomains.work/');
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
   if (req.method === 'OPTIONS') {
