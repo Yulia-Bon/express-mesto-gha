@@ -9,7 +9,7 @@ const Unauthorized = require('../errors/Unauthorized');
 // GET /users — возвращает всех пользователей
 module.exports.getUsers = (req, res, next) => {
   Users.find({})
-    .then((user) => res.status(200).send({ data: user }))
+    .then((user) => res.status(200).send(user))
     .catch((err) => next(err));
 };
 
@@ -20,7 +20,7 @@ module.exports.getUserId = (req, res, next) => {
       throw new ErrorNotFound('Пользователь не найден');
     })
     .then((user) => {
-      res.status(200).send({ data: user });
+      res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -37,7 +37,7 @@ module.exports.getUserMe = (req, res, next) => {
       if (!user) {
         next(new ErrorNotFound('Пользователь не найден'));
       }
-      res.status(200).send({ data: user });
+      res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -94,7 +94,7 @@ module.exports.updateUserInfo = (req, res, next) => {
       throw new ErrorNotFound('Пользователь не найден');
     })
     .then((user) => {
-      res.status(200).send({ data: user });
+      res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -112,7 +112,7 @@ module.exports.updateAvatar = (req, res, next) => {
       throw new ErrorNotFound('Пользователь не найден');
     })
     .then((user) => {
-      res.status(200).send({ data: user });
+      res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
