@@ -32,12 +32,12 @@ module.exports.getUserId = (req, res, next) => {
 };
 
 module.exports.getUserMe = (req, res, next) => {
-  Users.find({ _id: req.user })
-    .then((user) => {
-      if (!user) {
-        next(new ErrorNotFound('Пользователь не найден'));
-      }
-      res.status(200).send(user);
+  Users.find({ _id: req.user._id })
+  .then((usersList) => {
+    if (usersList.length === 0) {
+      next(new ErrorNotFound('Пользователь не найден'));
+    }
+    res.status(200).send(usersList);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
