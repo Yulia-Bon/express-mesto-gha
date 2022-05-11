@@ -1,5 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
+// app.js
+
+require('dotenv').config();
 //const cookieParser = require('cookie-parser');
 
 //const helmet = require('helmet');
@@ -20,6 +23,8 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 // eslint-disable-next-line no-undef
 const { PORT = 3000 } = process.env;
 const app = express();
+
+console.log(process.env.NODE_ENV); // production
 
 // Мидлвары
 app.use((req, res, next) => {

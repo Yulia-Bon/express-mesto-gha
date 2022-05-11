@@ -1,10 +1,10 @@
 const bcrypt = require('bcryptjs'); // импортируем bcrypt
 const jwt = require('jsonwebtoken'); // импортируем jwt
 const Users = require('../models/user');
-const ErrorNotFound = require('../errors/ErrorNotFound');
-const ErrorConflict = require('../errors/ErrorConflict');
-const BadRequestError = require('../errors/BadRequestError');
-const Unauthorized = require('../errors/Unauthorized');
+const ErrorNotFound = require('./errors/ErrorNotFound');
+const ErrorConflict = require('./errors/ErrorConflict');
+const BadRequestError = require('./errors/BadRequestError');
+const Unauthorized = require('./errors/Unauthorized');
 
 // GET /users — возвращает всех пользователей
 module.exports.getUsers = (req, res, next) => {
@@ -143,7 +143,8 @@ module.exports.login = (req, res, next) => {
         });
     })
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
+      const { NODE_ENV, JWT_SECRET } = process.env;
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
       res.cookie('token', token);
       res.send({ jwt: token });
     })
