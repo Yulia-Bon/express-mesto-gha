@@ -35,11 +35,11 @@ module.exports.getUserId = (req, res, next) => {
 
 
 module.exports.getUserMe = (req, res, next) => {
-  Users.findOne({ _id: req.user._id })
+  Users.findById(req.user._id )
+    .orFail(() => {
+    throw new ErrorNotFound('Пользователь не найден');
+    })
     .then((user) => {
-      if (!user) {
-        next(new ErrorNotFound('Пользователь не найден'));
-      }
       res.status(200).send(user);
     })
     .catch((err) => {
