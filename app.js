@@ -1,14 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-// app.js
 
-const dotenvConfigOutput = require('dotenv').config();
-//const cookieParser = require('cookie-parser');
 
-//const helmet = require('helmet');
-
-//const cors = require('cors');
-// const routes = require('./routes/errorsway');
 
 const { errors } = require('celebrate');
 const bodyParser = require('body-parser');
@@ -26,10 +20,9 @@ const app = express();
 
 console.log(process.env.NODE_ENV); // production
 
-// Мидлвары
+// Мидлвар
 app.use((req, res, next) => {
-  // res.header('Access-Control-Allow-Origin', 'http://mesto-express.ybon.nomoredomains.work/', 'http://localhost:3000/');
-   res.header('Access-Control-Allow-Origin', '*');
+   res.header('Access-Control-Allow-Origin', 'http://mesto-express.ybon.nomoredomains.work');
    res.header('Access-Control-Allow-Methods', '*');
    res.header('Access-Control-Allow-Credentials', 'true');
    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
