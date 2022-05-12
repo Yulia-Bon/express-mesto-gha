@@ -1,8 +1,5 @@
-require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const Unauthorized = require('../controllers/errors/Unauthorized');
-
-console.log(process.env.NODE_ENV); // production
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
