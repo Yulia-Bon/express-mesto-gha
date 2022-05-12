@@ -1,8 +1,5 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-
-
 
 const { errors } = require('celebrate');
 const bodyParser = require('body-parser');
@@ -17,8 +14,6 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 // eslint-disable-next-line no-undef
 const { PORT = 3000 } = process.env;
 const app = express();
-
-console.log(process.env.NODE_ENV); // production
 
 // Мидлвар
 app.use((req, res, next) => {
