@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 // app.js
 
-require('dotenv').config();
+const dotenvConfigOutput = require('dotenv').config();
 //const cookieParser = require('cookie-parser');
 
 //const helmet = require('helmet');
