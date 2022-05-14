@@ -32,12 +32,10 @@ module.exports.getUserId = (req, res, next) => {
     });
 };
 
-
-
 module.exports.getUserMe = (req, res, next) => {
-  Users.findById(req.user._id )
+  Users.findById(req.user._id)
     .orFail(() => {
-    throw new ErrorNotFound('Пользователь не найден');
+      throw new ErrorNotFound('Пользователь не найден');
     })
     .then((user) => {
       res.status(200).send(user);
@@ -50,7 +48,6 @@ module.exports.getUserMe = (req, res, next) => {
       }
     });
 };
-
 
 // POST /users — создаёт пользователя
 module.exports.createUser = (req, res, next) => {

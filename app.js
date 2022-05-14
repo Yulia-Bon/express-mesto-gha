@@ -18,17 +18,17 @@ const app = express();
 
 // Мидлвар
 app.use((req, res, next) => {
-   res.header('Access-Control-Allow-Origin', '*');
-   res.header('Access-Control-Allow-Methods', '*');
-   res.header('Access-Control-Allow-Credentials', 'true');
-   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-   if (req.method === 'OPTIONS') {
-     res.send(200);
-   }
-   next();
- });
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', '*');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    res.send(200);
+  }
+  next();
+});
 
-//app.use(cookieParser());
+// app.use(cookieParser());
 // подключаемся к серверу mongo
 mongoose.connect('mongodb://localhost:27017/mestodb', { useNewUrlParser: true });
 
@@ -42,18 +42,11 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
-
+app.listen(PORT);
 app.post('/signup', registerValid, createUser);
 app.post('/signin', loginValid, login);
-
 app.use(auth);
-
-app.use(errorLogger); // подключаем логгер ошибок
-
-app.use(routerErrorWay);
-
-app.use(errors());
-
 app.use(errorHandler);
-
-app.listen(PORT);
+app.use(routerErrorWay);
+app.use(errors());
+app.use(errorLogger); // подключаем логгер ошибок
